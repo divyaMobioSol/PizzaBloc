@@ -12,14 +12,15 @@ class LoadPizzaCounter extends PizzaEvent {}
 class AddPizza extends PizzaEvent {
   final Pizza pizza;
 
-  AddPizza({required this.pizza});
+  AddPizza({
+    required this.pizza,
+  });
   @override
   List<Object> get prosp => [pizza];
 }
 
 class RemovePizza extends PizzaEvent {
   final Pizza pizza;
-
   RemovePizza({required this.pizza});
 
   @override

@@ -11,15 +11,21 @@ class PizzaBloc extends Bloc<PizzaEvent, PizzaState> {
   PizzaBloc() : super(PizzaInitial()) {
     on<LoadPizzaCounter>((event, emit) async {
       await Future<void>.delayed(Duration(seconds: 3));
-      emit(Pizzaloaded(pizzas: <Pizza>[]));
-      // TODO: implement event handler
+      List<Pizza> pizzass = [
+        const Pizza(id: '1', image: 'assets/pizza.jpg', name: 'my pizza'),
+        const Pizza(id: '2', image: 'assets/pizza1.jpg', name: 'my new pizza')
+      ];
+      emit(Pizzaloaded(pizzas: pizzass));
     });
 
     on<AddPizza>((event, emit) {
-      if (state is Pizzaloaded) {
-        final state = this.state as Pizzaloaded;
-        emit(Pizzaloaded(pizzas: List.from(state.pizzas)..add(event.pizza)));
+      final PizzaState currentState = state;
+      List<Pizza> oldpizzas = [];
+      if (currentState is Pizzaloaded) {
+        oldpizzas = currentState.pizzas;
       }
+      oldpizzas.add(event.pizza);
+      emit(Pizzaloaded(pizzas: oldpizzas));
     });
 
     on<RemovePizza>((event, emit) {
